@@ -1,1 +1,139 @@
-{{data}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: white;
+            color: black;
+            text-align: center;
+        } 
+            
+        .button-60 {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .button-60 a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .button-60:hover {
+            background-color: #0056b3;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 0 20px;
+        }
+        
+        .box {
+            width: 100%; 
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .box h2 {
+            margin-top: 500;
+        }
+
+        .box p {
+            line-height: 1.5;
+        }
+      
+        .box a {
+            color: blue;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        
+        .box a:hover {
+            text-decoration: underline;
+        }
+        
+        .box span {
+            color: #888;
+            font-size: 12px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .box {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .box {
+                width: 100%;
+            }
+        }
+        
+
+
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center;">
+    <h1>All Blogs</h1>
+    </div>
+
+    <br />
+    <button class="button-60" role="button">
+      <a href="{% url 'create_blog' %}"> Add Blog </a>
+    </button>
+   
+    
+    <div class="container">
+        {% for i in data%}
+        <div class="box">
+            <h2>{{i.title | title}}</h2>
+           <img src='{{i.image}}'/>
+            
+            <p>{{i.details | linebreaks | truncatewords:50}}
+                <span><a href="{% url 'blog_detail' i.pk%}" style="text-decoration: underline; color: gray;">see more</a></span>
+            </p>
+         
+
+            <div style="float: left; ">
+                <a href="{% url 'edit_blog' i.id %}">Edit</a>
+                
+                <a href="{% url 'delete_blog' i.id %}">Delete</a>
+            </div>
+            <span style="float: right; position: relative;">{{i.created_at | timesince}}ago</span>
+        </div>
+
+        {% endfor %}
+    </div>
+
+
+  </body>
+</html>
+
+
+
+
+
+
